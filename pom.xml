@@ -47,6 +47,11 @@
       <groupId>org.apache.camel.quarkus</groupId>
       <artifactId>camel-quarkus-jms</artifactId>
     </dependency>
+    <!-- This dependency : quarkus-resteasy is not necessary for production, we will keep it so that we can use Dev services for Kafka-->
+    <dependency>
+      <groupId>io.quarkus</groupId>
+      <artifactId>quarkus-resteasy</artifactId>
+    </dependency>
     <dependency>
       <groupId>io.quarkus</groupId>
       <artifactId>quarkus-arc</artifactId>

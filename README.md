@@ -4,14 +4,31 @@ This project uses Quarkus, the Supersonic Subatomic Java Framework.
 
 If you want to learn more about Quarkus, please visit its website: https://quarkus.io/ .
 
-## Running the application in dev mode
+This is an example of a Camel Route that :
+- Consume messages from an  ActiveMQ Artemis queue named : `queue-test`
+- Produce messages to a Kafka topic named : `topic-test`
 
+## Starting Apache ActiveMQ locally
+You can start Apache ActiveMQ broker locally via docker using the ArtemisCloud container image:
+
+```shell script
+docker run -it --rm -p 8161:8161 -p 61616:61616 -p 5672:5672 -e AMQ_USER=quarkus -e AMQ_PASSWORD=quarkus quay.io/artemiscloud/activemq-artemis-broker
+```
+
+> **_NOTE:_** We don't have to create the Queue, it will be created by the Camel Consumer if it doesn't exist
+
+## Starting Kafka locally
+For dev mode we are using the dev services Kafka. Quakus will detect we are not connected to any Kafka broker and will automatically provision a Kafka for us.
+
+## Running the application in dev mode
 You can run your application in dev mode that enables live coding using:
 ```shell script
 ./mvnw compile quarkus:dev
 ```
 
 > **_NOTE:_**  Quarkus now ships with a Dev UI, which is available in dev mode only at http://localhost:8080/q/dev/.
+
+## Try sending new messages
 
 ## Packaging and running the application
 
@@ -41,6 +58,11 @@ You can create a native executable using:
 Or, if you don't have GraalVM installed, you can run the native executable build in a container using: 
 ```shell script
 ./mvnw package -Pnative -Dquarkus.native.container-build=true
+```
+
+You can start a Docker image locally for Kafka
+```shell script
+docker run -it --rm --name redpanda -p 9092:9092 vectorized/redpanda
 ```
 
 You can then execute your native executable with: `./target/active-mq-2-kafka-1.0.0-SNAPSHOT-runner`
